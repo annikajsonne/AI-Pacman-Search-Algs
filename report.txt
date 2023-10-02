@@ -1,0 +1,63 @@
+#TODO: QUESTION
+Discuss your new heuristics, are they both admissible and consistent? Why? Then compare
+the three heuristics (manhattan, euclidean, and random) in terms of performance and explain the differences
+in performance.
+
+The manhattan heuristic is admissible because it never overestimates the true cost to reach the goal. 
+It calculates the sum of the absolute differences in x and y coordinates between the current position and the goal, 
+which is always less than or equal to the true path length. the Manhattan heuristic is consistent because for any state 
+and its successor, the heuristic of the state is always less than or equal to the cost of reaching the successor 
+plus the heuristic of the successor. 
+
+The euclidean heuristic is admissible because it calculates the straight line distance between the current position and the goal. 
+Since the Euclidean distance is always the shortest path between two points in Euclidean space, 
+this heuristic never overestimates the true cost. The Euclidean heuristic is consistent because the Euclidean distance 
+between two points is always less than or equal to the sum of the distances along the coordinate axes.
+
+The random heuristic is not admissible and it assigns random values between 1 and 10 as heuristic values, 
+which can sometimes overestimate or underestimate the true cost. It is not a meaningful measure of the remaining
+cost to reach the goal. Since the random heuristic is not admissible, we don't need to consider consistency.
+
+Now, let's compare the performance of these three heuristics:
+Comparing these, the Manhattan and Euclidean Heuristics are admissible and consistent. As a result, they guide A* search efficiently, 
+and the choice between them depends on the specific problem. In many grid-based problems, 
+the Manhattan heuristic is more efficient because it only considers horizontal and vertical movements, 
+which align with the grid structure. The Euclidean heuristic works well in problems where diagonal movements
+ are allowed or when the grid structure is not relevant. The random heuristic, however, is not admissible, 
+ as it provides random values that do not guarantee to underestimate the true cost. 
+ It can lead to suboptimal paths and less efficient search. 
+ In practice, using such a heuristic is not recommended because it can significantly affect the performance
+  of A* search.
+  
+#TODO: QUESTION
+What happens on openMaze for the various search strategies?
+Describe the behaviour seen and explain why it occurs.
+
+For depth first search, a path for pacman was found to reach the goal but with a relatively high total cost, which was 298. 
+DFS had to expand 576 search nodes, and Pacman's final score was 212. This happened because DFS explores as deep on a branch 
+as it can first, and then backtracks. In this maze, it first followed a single path deep into the maze before 
+exploring other branches, therefore it found a path but not necessarily the optimal one. 
+The high total cost and low score indicate that it may have taken a longer route.
+
+For breadth first search, a path was found with a total cost of 54, and it expanded 682 nodes, giving pacman a score of 465.
+This happened because BFS explores all the possible paths from the start state per level, before going down to the next level.
+It guarantees the shortest path in terms of the number of actions, so it found an optimal path with the lowest total cost, 
+resulting in a high score.
+
+For uniform cost search, there was a path found with a total cost of 54 as well, and it also expanded 682 nodes. 
+This made pacmans score 456. This is very similar to BFS, but it also considers the cost of the actions, guaranteering
+the lowest cost path. Since the cost of all actions is the same in this maze, 
+UCS behaves similarly to BFS and finds an optimal path.
+
+For A* search, I compared with the three different heuristics. With manhattan heuristc, a path was found with
+a total cost of 54, and it expanded 535 nodes. Pacman's score was also 456. This is because this method combines UCS 
+with heuristic based search, and the manhattan heuristic creates a good estimate for the remaining cost to get to the goal.
+This is an optimal path with a low total cost due to the balancing of actions and the heuristic estimate. With the 
+Euclidean heuristic, A* found a path with a total cost of 54, it expanded 550 nodes and scored 456 as well. This is because
+the euclidean heuristc provides another estimate of the remaining cost to reach the goal. In this maze specifically,
+it is quite similar to the Manhattan heuristic, but it expanded a few more nodes. A* search with the Euclidean heuristic 
+also finds an optimal path with a low total cost. Finally, for A* with the random heuristic, there was a path found
+with a total cost of 54, 771 nodes expanded, and a score of 456. A* search with a random heuristic is a bit unconventional 
+because it uses a heuristic that does not provide any meaningful estimate of the remaining cost. 
+Despite the random nature of the heuristic, A* still guarantees an optimal path by considering both action costs and the heuristic estimate. 
+However, it expanded more search nodes compared to A* with the Euclidean or Manhattan heuristic.
